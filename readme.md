@@ -28,3 +28,4 @@ Key|Value
 :-----------:|:--------------------------------------------: 
 API_KEY_BOT|The key to connect to the Telegram API and work with the bot. (can be obtained by contacting @BotFather on Telegram)
 API_KEY_GPT|The key to connect to the OpenAI API and work with the generation of responses to the request. (you can get it in your personal account on the OpenAI website)
+WELCOME_STICKER_HREF|A link to the sticker that is sent to the user after the bot starts
