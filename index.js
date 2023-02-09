@@ -38,7 +38,7 @@ bot.on('message', async msg => {
 
             model: "text-davinci-003",
             prompt: msg.text,
-            max_tokens: 4000,
+            max_tokens: 2000
 
         });
 
