@@ -26,15 +26,18 @@ bot.on('message', async msg => {
 
     if(msg.text === '/start') {
 
-        await bot.sendMessage(msg.chat.id, `Hello, ${msg.from.first_name}!`);
-        await bot.sendMessage(msg.chat.id, `This bot is designed to generate query responses using the Da Vinci 3 model.\n\nJust send your request as a message and wait for a response!`);
-        await bot.sendMessage(msg.chat.id, `Try our VPN service - https://play.google.com/store/apps/details?id=com.shaligulacartel.vpn_shaligula&hl=ru&gl=US`);
+        await bot.sendMessage(msg.chat.id, `Привет, ${msg.from.first_name}!`);
+        await bot.sendMessage(msg.chat.id, `Этот бот использует текстовую модель GPT-Turbo 3.5 и Dall-E для генерации ответов на ваш запрос.`);
+        await bot.sendMessage(msg.chat.id, `Бот может генерировать текст, код и изображения. Для того чтобы задать вопрос просто напишите боту.`);
+        await bot.sendMessage(msg.chat.id, `Для генерации картинки по вашему запросу составьте запрос в следующем виде:`);
+        await bot.sendMessage(msg.chat.id, `/img [Ваш Запрос]`);
+        await bot.sendMessage(msg.chat.id, `Также попробуйте наш VPN сервис - https://play.google.com/store/apps/details?id=com.shaligulacartel.vpn_shaligula&hl=ru&gl=US`);
         await bot.sendSticker(msg.chat.id, process.env.WELCOME_STICKER_HREF)
 
         console.log(`Запрос ${quantity} завершен!`);
 
     }
-    if(msg.text.startsWith('/img')) {
+    else if(msg.text.startsWith('/img')) {
 
         let waitMessage;
 
