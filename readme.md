@@ -1,4 +1,4 @@
-# GPT-bot for Telegram
+# AI-bot for Telegram
 
 Chat bot that uses OpenAI Api (GPT Turbo, Dall-E, Whisper) to generate responses to user requests.
 
