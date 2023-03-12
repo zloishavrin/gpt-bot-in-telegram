@@ -1,7 +1,7 @@
 const { Configuration, OpenAIApi } = require("openai");
 const TelegramBot = require('node-telegram-bot-api');
-const fs = require('fs/promises');
-const { writeFileSync } = require("fs");
+const fs = require('fs');
+const https = require('https');
 
 //Initialize environment variables
 require('dotenv').config();
@@ -19,7 +19,37 @@ const bot = new TelegramBot(process.env.API_KEY_BOT, {polling: true});
 
 let quantity = 0;
 
-bot.on('message', async msg => {
+bot.on('voice', async voice => {
+    
+    let waitMessage;
+
+    await bot.sendMessage(voice.chat.id, 'Данный функционал в разработке.').then(result => {
+
+        waitMessage = result;
+
+    });
+
+    const voiceFileId = voice.voice.file_id;
+    const voiceFileLink = await bot.getFileLink(voiceFileId);
+    const voiceFile = await fs.createWriteStream(`voices/1.wav`);
+    const voiceWriteFile = await https.get(voiceFileLink, response => {
+
+        response.pipe(voiceFile);
+
+    });
+
+    const translate = await gpt.createTranslation(
+
+        fs.createReadStream(`voices/1.mp3`),
+        'whisper-1'
+
+    );
+
+    console.log(translate.data.text);
+    
+})
+
+bot.on('text', async msg => {
 
     quantity = quantity + 1;
     console.log(`Запрос ${quantity}: ${msg.text}`);
@@ -27,7 +57,7 @@ bot.on('message', async msg => {
     if(msg.text === '/start') {
 
         await bot.sendMessage(msg.chat.id, `Привет, ${msg.from.first_name}!`);
-        await bot.sendMessage(msg.chat.id, `Этот бот использует текстовую модель GPT-Turbo 3.5 и Dall-E для генерации ответов на ваш запрос.`);
+        await bot.sendMessage(msg.chat.id, `Этот бот использует модели GPT-Turbo 3.5 и Dall-E для генерации ответов на ваш запрос.`);
         await bot.sendMessage(msg.chat.id, `Бот может генерировать текст, код и изображения. Для того чтобы задать вопрос просто напишите боту.`);
         await bot.sendMessage(msg.chat.id, `Для генерации картинки по вашему запросу составьте запрос в следующем виде:`);
         await bot.sendMessage(msg.chat.id, `/img [Ваш Запрос]`);
